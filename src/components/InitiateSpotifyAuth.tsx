@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-
-interface props {
-  isAccessToken: boolean | null;
-  setIsAccessToken: React.Dispatch<React.SetStateAction<boolean | null>>;
-}
+import { useNavigate } from "react-router-dom";
 
 const generateRandomString = (length: number) => {
   const possible =
@@ -25,14 +21,12 @@ const base64encode = (input: ArrayBuffer) => {
     .replace(/\//g, "_");
 };
 
-export default function SpotifyAuth({
-  isAccessToken,
-  setIsAccessToken,
-}: props) {
+export default function SpotifyAuth() {
   const clientID = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
   const redirectURI = "http://localhost:5173/";
+  const navigate = useNavigate();
 
   async function initiateSpotifyAuth() {
     const codeVerifier = generateRandomString(128);
@@ -86,29 +80,27 @@ export default function SpotifyAuth({
         const data = await response.json();
 
         localStorage.setItem("access_token", data["access_token"]);
-        if (localStorage.getItem("access_token")) {
-            setIsAccessToken(true);
-        }
-        console.log(isAccessToken);
         console.log(localStorage.getItem("access_token"));
         localStorage.setItem("refresh_token", data["refresh_token"]);
       } catch (error) {
         console.error("Error during token retrieval:", error);
-        setIsAccessToken(false);
       }
     } else {
       console.log("Code verifier or code not found");
-      setIsAccessToken(false);
     }
   }
 
   useEffect(() => {
-    if (!code) {
-      initiateSpotifyAuth();
-    } else {
-      getToken();
-    }
-  }, [setIsAccessToken]);
+    const fetchData = async () => {
+      if (!code) {
+        await initiateSpotifyAuth();
+      } else {
+        await getToken();
+        navigate("/admin");
+      }
+    };
+    fetchData();
+  }, []);
 
   return <></>;
 }

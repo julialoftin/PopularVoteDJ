@@ -4,7 +4,6 @@ export default function Admin() {
   const getRefreshToken = async () => {
     const refreshToken = localStorage.getItem("refresh_token");
     const clientID = import.meta.env.VITE_CLIENT_ID;
-    const url = "https://accounts.spotify.com/api/token";
 
     if (refreshToken != null) {
       const payload = new URLSearchParams({
@@ -14,7 +13,7 @@ export default function Admin() {
       });
 
       try {
-        const response = await fetch(url, {
+        const response = await fetch("https://accounts.spotify.com/api/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -27,8 +26,8 @@ export default function Admin() {
         }
 
         const data = await response.json();
-        localStorage.setItem("access_token", data.accessToken);
-        localStorage.setItem("refresh_token", data.refreshToken);
+        localStorage.setItem("access_token", data["access_token"]);
+        localStorage.setItem("refresh_token", data["refresh_token"]);
       } catch (error) {
         console.error("Error during refresh token retrieval:", error);
       }
@@ -38,11 +37,14 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    getRefreshToken();
-    console.log(localStorage.getItem("refresh_Token"))
+    const handleRefreshingToken = () => {
+      getRefreshToken();
+      console.log(localStorage.getItem("refresh_token"));
+    };
+    handleRefreshingToken();
   }, []);
 
-//   setInterval(getRefreshToken, 3540000);
+  setInterval(getRefreshToken, 3540000);
 
   return (
     <>
