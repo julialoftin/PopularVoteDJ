@@ -25,7 +25,7 @@ export default function SpotifyAuth() {
   const clientID = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
-  const redirectURI = "http://localhost:5173/";
+  const redirectURI = "http://localhost:5173/authorize";
   const navigate = useNavigate();
 
   async function initiateSpotifyAuth() {

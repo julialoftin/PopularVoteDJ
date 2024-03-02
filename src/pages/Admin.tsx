@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin() {
+  const navigate = useNavigate();
   const getRefreshToken = async () => {
     const refreshToken = localStorage.getItem("refresh_token");
     const clientID = import.meta.env.VITE_CLIENT_ID;
@@ -46,9 +48,15 @@ export default function Admin() {
 
   setInterval(getRefreshToken, 3540000);
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate('/');
+  };
+
   return (
     <>
-      <p>Does it work</p>
+      <button onClick={handleLogout}>Logout</button>
     </>
   );
 }
