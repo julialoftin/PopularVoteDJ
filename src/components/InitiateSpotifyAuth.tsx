@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 
+interface props {
+  isAccessToken: boolean | null;
+  setIsAccessToken: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
+
 const generateRandomString = (length: number) => {
   const possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -20,7 +25,10 @@ const base64encode = (input: ArrayBuffer) => {
     .replace(/\//g, "_");
 };
 
-export default function SpotifyAuth() {
+export default function SpotifyAuth({
+  isAccessToken,
+  setIsAccessToken,
+}: props) {
   const clientID = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
@@ -51,7 +59,6 @@ export default function SpotifyAuth() {
 
   async function getToken() {
     const codeVerifier = localStorage.getItem("codeVerifier");
-    console.log("before setting payload, codeverifier:", localStorage.getItem("codeVerifier"));
 
     if (codeVerifier != null && code != null) {
       const payload = new URLSearchParams({
@@ -69,7 +76,7 @@ export default function SpotifyAuth() {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: payload,
-          "credentials": "include",
+          credentials: "include",
         });
 
         if (!response.ok) {
@@ -78,13 +85,20 @@ export default function SpotifyAuth() {
 
         const data = await response.json();
 
-        localStorage.setItem("access_token", data.accessToken);
-        localStorage.setItem("refresh_token", data.refreshToken);
+        localStorage.setItem("access_token", data["access_token"]);
+        if (localStorage.getItem("access_token")) {
+            setIsAccessToken(true);
+        }
+        console.log(isAccessToken);
+        console.log(localStorage.getItem("access_token"));
+        localStorage.setItem("refresh_token", data["refresh_token"]);
       } catch (error) {
         console.error("Error during token retrieval:", error);
+        setIsAccessToken(false);
       }
     } else {
       console.log("Code verifier or code not found");
+      setIsAccessToken(false);
     }
   }
 
@@ -94,7 +108,7 @@ export default function SpotifyAuth() {
     } else {
       getToken();
     }
-  }, []);
+  }, [setIsAccessToken]);
 
   return <></>;
 }
