@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import AdminNavbar from "../components/AdminNavbar";
+import CreateAPlaylist from "../components/CreateAPlaylist";
+import GetUsersSpotifyProfile from "../components/GetUsersSpotifyProfile";
+import "../styles/Admin.css"
 
 export default function Admin() {
-
-
   async function getToken() {
     const codeVerifier = localStorage.getItem("codeVerifier");
     const clientID = import.meta.env.VITE_CLIENT_ID;
@@ -39,6 +40,7 @@ export default function Admin() {
         window.localStorage.setItem("access_token", data["access_token"]);
         console.log(window.localStorage.getItem("access_token"));
         window.localStorage.setItem("refresh_token", data["refresh_token"]);
+
       } catch (error) {
         console.error("Error during token retrieval:", error);
       }
@@ -96,6 +98,8 @@ export default function Admin() {
   return (
     <>
       <AdminNavbar />
+      <GetUsersSpotifyProfile />
+      <CreateAPlaylist />
     </>
   );
 }
