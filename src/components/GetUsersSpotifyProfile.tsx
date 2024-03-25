@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 const GetUsersSpotifyProfile = () => {
   const [displayName, setDisplayName] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
   const getDisplayNameAndImage = async () => {
     try {
       const response = await fetch("https://api.spotify.com/v1/me", {
@@ -19,7 +18,6 @@ const GetUsersSpotifyProfile = () => {
       const data = await response.json();
       console.log(data);
       setDisplayName(data["display_name"]);
-      setImageUrl(data.images[0].url);
     } catch (error) {
       console.error("Error fetching profile details: ", error);
     }
@@ -28,8 +26,7 @@ const GetUsersSpotifyProfile = () => {
 
   return (
     <div className="admin-profile-details-container">
-      <h3>{displayName}</h3>
-      <img src={imageUrl} alt="Spotify user's profile image" />
+      <h3>Welcome, {displayName}!</h3>
     </div>
   );
 };
