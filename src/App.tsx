@@ -4,7 +4,6 @@ import Admin2 from "./pages/Admin2";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
-import { useEffect, useState } from "react";
 
 function App() {
 
