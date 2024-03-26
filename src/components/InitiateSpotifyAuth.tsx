@@ -20,22 +20,25 @@ const base64encode = (input: ArrayBuffer) => {
     .replace(/\//g, "_");
 };
 
+const setAndHashCodes = async () => {
+  const codeVerifier = generateRandomString(128);
+  const hashed = await sha256(codeVerifier);
+  const codeChallenge = base64encode(hashed);
+
+  localStorage.setItem("codeVerifier", codeVerifier);
+  return codeChallenge;
+}
+
 export default function SpotifyAuth() {
 
   const clientID = import.meta.env.VITE_CLIENT_ID;
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("code");
   const redirectURI = "http://localhost:5173/admin";
 
   async function initiateSpotifyAuth() {
-    const codeVerifier = generateRandomString(128);
-    const hashed = await sha256(codeVerifier);
-    const codeChallenge = base64encode(hashed);
 
+    const codeChallenge = await setAndHashCodes();
     const scope = "playlist-modify-public";
     const authURL = new URL("https://accounts.spotify.com/authorize/");
-
-    window.localStorage.setItem("codeVerifier", codeVerifier);
 
     const params = {
       response_type: "code",
@@ -52,9 +55,8 @@ export default function SpotifyAuth() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!code) {
+        await setAndHashCodes();
         await initiateSpotifyAuth();
-      }
     };
     fetchData();
   }, []);

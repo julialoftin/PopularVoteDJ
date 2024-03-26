@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 
 const GetUsersSpotifyProfile = () => {
   const [displayName, setDisplayName] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const getDisplayNameAndImage = async () => {
+  const getDisplayName = async (accessToken: string) => {
     try {
       const response = await fetch("https://api.spotify.com/v1/me", {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -17,19 +16,24 @@ const GetUsersSpotifyProfile = () => {
       }
 
       const data = await response.json();
-      console.log(data);
-      setDisplayName(data["display_name"]);
-      setImageUrl(data.images[0].url);
+      return data["display_name"];
     } catch (error) {
       console.error("Error fetching profile details: ", error);
     }
   };
-  getDisplayNameAndImage();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      getDisplayName(accessToken).then((displayName) => {
+        setDisplayName(displayName);
+      });
+    }
+  }, [localStorage.getItem("access_token")]);
 
   return (
     <div className="admin-profile-details-container">
-      <h3>{displayName}</h3>
-      <img src={imageUrl} alt="Spotify user's profile image" />
+      <h3>Welcome, {displayName}!</h3>
     </div>
   );
 };
