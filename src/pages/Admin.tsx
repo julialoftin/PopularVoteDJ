@@ -1,7 +1,4 @@
 import { useEffect } from "react";
-import AdminNavbar from "../components/AdminNavbar";
-import CreateAPlaylist from "../components/CreateAPlaylist";
-import GetUsersSpotifyProfile from "../components/GetUsersSpotifyProfile";
 import "../styles/Admin.css"
 
 export default function Admin() {
@@ -32,15 +29,15 @@ export default function Admin() {
         });
 
         if (!response.ok) {
+          console.log(response);
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
         window.localStorage.setItem("access_token", data["access_token"]);
-        console.log(window.localStorage.getItem("access_token"));
         window.localStorage.setItem("refresh_token", data["refresh_token"]);
-
+        await new Promise<void>((resolve) => resolve());
       } catch (error) {
         console.error("Error during token retrieval:", error);
       }
@@ -49,57 +46,14 @@ export default function Admin() {
     }
   }
 
-  const getRefreshToken = async () => {
-    const refreshToken = localStorage.getItem("refresh_token");
-    const clientID = import.meta.env.VITE_CLIENT_ID;
-
-    if (refreshToken != null) {
-      const payload = new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token: refreshToken,
-        client_id: clientID,
-      });
-
-      try {
-        const response = await fetch("https://accounts.spotify.com/api/token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: payload,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        localStorage.setItem("access_token", data["access_token"]);
-        localStorage.setItem("refresh_token", data["refresh_token"]);
-      } catch (error) {
-        console.error("Error during refresh token retrieval:", error);
-      }
-    } else {
-      console.log("Refresh token not found");
-    }
-  };
-
   useEffect(() => {
-    getToken();
-    const handleRefreshingToken = () => {
-      getRefreshToken();
-      console.log(localStorage.getItem("refresh_token"));
+    const fetchData = async () => {
+      await getToken();
+      window.location.href = "http://localhost:5173/admin2/";
     };
-    handleRefreshingToken();
+    fetchData();
   }, []);
 
-  setInterval(getRefreshToken, 3540000);
+  return null;
 
-  return (
-    <>
-      <AdminNavbar />
-      <GetUsersSpotifyProfile />
-      <CreateAPlaylist />
-    </>
-  );
 }
