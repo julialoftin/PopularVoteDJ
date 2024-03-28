@@ -7,6 +7,7 @@ const CreateAPlaylist = () => {
             <form>
                 <input type="text" name="playlistName" placeholder="Playlist Name" />
                 <input type="text" name="playlistDescription" placeholder="Playlist Description" />
+                <button type="submit">Create</button>
             </form>
         </div>
     )
