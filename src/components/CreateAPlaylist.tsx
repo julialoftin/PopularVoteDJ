@@ -1,6 +1,8 @@
 
 const CreateAPlaylist = () => {
 
+    // Call playlist end point here
+
     return (
         <div>
             <h4>Create a playlist for your event!</h4>
