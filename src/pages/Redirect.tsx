@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "../styles/Admin.css"
+import "../styles/Admin.css";
 
 export default function Redirect() {
   async function getToken() {
@@ -7,7 +7,7 @@ export default function Redirect() {
     const clientID = import.meta.env.VITE_CLIENT_ID;
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
-    const redirectURI = "http://localhost:5173/admin";
+    const redirectURI = "http://localhost:5173/redirect";
 
     if (codeVerifier != null && code != null) {
       const payload = new URLSearchParams({
@@ -49,11 +49,16 @@ export default function Redirect() {
   useEffect(() => {
     const fetchData = async () => {
       await getToken();
-      window.location.href = "http://localhost:5173/admin/";
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (localStorage.getItem("codeVerifier") && code != null) {
+        console.log("codeVerifier:" ,localStorage.getItem("codeVerifier"));
+        console.log("Code: ", code);
+        window.location.href = "http://localhost:5173/admin/";
+      }
     };
     fetchData();
   }, []);
 
   return null;
-
 }
