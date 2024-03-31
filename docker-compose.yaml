@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+
+  web:
+    container_name: votedj
+    command: npm run dev
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile.dev
+    image: votedj-image
+    restart: on-failure
+    ports:
+      - '5173:5173'
+    env_file:
+      - .env
+    networks:
+      - votedjNetwork
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    image: backend-image
+    restart: on-failure
+    ports:
+      - '8080:8080'
+    networks:
+      - votedjNetwork
+
+
+networks:
+  votedjNetwork:
+    name: votedjNetwork
+    
