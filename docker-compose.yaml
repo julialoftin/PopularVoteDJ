@@ -6,7 +6,7 @@ services:
     container_name: votedj
     command: npm run dev
     build:
-      context: ./webapp
+      context: .
       dockerfile: Dockerfile.dev
     image: votedj-image
     restart: on-failure
@@ -17,17 +17,17 @@ services:
     networks:
       - votedjNetwork
 
-  backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.dev
-    image: backend-image
-    restart: on-failure
-    ports:
-      - '8080:8080'
-    networks:
-      - votedjNetwork
+  # backend:
+  #   container_name: backend
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile.dev
+  #   image: backend-image
+  #   restart: on-failure
+  #   ports:
+  #     - '8080:8080'
+  #   networks:
+  #     - votedjNetwork
 
 
 networks:
