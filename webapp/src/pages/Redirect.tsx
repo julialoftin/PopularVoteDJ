@@ -7,7 +7,7 @@ export default function Redirect() {
     const clientID = import.meta.env.VITE_CLIENT_ID;
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
-    const redirectURI = "http://localhost:5173/admin";
+    const redirectURI = "http://localhost:8080/redirect";
 
     if (codeVerifier != null && code != null) {
       const payload = new URLSearchParams({
@@ -49,11 +49,14 @@ export default function Redirect() {
   useEffect(() => {
     const fetchData = async () => {
       await getToken();
-      window.location.href = "http://localhost:5173/admin/";
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (localStorage.getItem("codeVerifier") && code != null) {
+        window.location.href = "http://localhost:8080/admin/";
+      }
     };
     fetchData();
   }, []);
 
   return null;
-
 }
