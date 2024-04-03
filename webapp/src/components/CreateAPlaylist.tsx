@@ -8,8 +8,7 @@ interface CreatePlaylistInfo {
 }
 
 const callSpotifyCreatePlaylist = async (
-  createPlaylistInfo: CreatePlaylistInfo,
-  id: string
+  createPlaylistInfo: CreatePlaylistInfo
 ) => {
   try {
     const accessToken = sessionStorage.getItem("access_token");
@@ -35,7 +34,7 @@ const callSpotifyCreatePlaylist = async (
   }
 };
 
-const CreateAPlaylist: React.FC<AdminProps> = ({ userId }) => {
+const CreateAPlaylist: React.FC<AdminProps> = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -50,7 +49,7 @@ const CreateAPlaylist: React.FC<AdminProps> = ({ userId }) => {
       description: description,
     };
 
-    callSpotifyCreatePlaylist(playlistInfo, userId);
+    callSpotifyCreatePlaylist(playlistInfo);
   };
 
   return (

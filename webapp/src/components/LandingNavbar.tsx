@@ -4,7 +4,7 @@ export default function LandingNavbar() {
   return (
     <div>
       <Link to="/authorize">
-        <button>Log in With Spotify!</button>
+        <button>Log in with Spotify!</button>
       </Link>
     </div>
   );
