@@ -21,7 +21,8 @@ const GetUsersSpotifyProfile = ({
       }
 
       const data = await response.json();
-      return data["display_name"];
+      // return data["display_name"];
+      return data;
     } catch (error) {
       console.error("Error fetching profile details: ", error);
     }
@@ -30,12 +31,23 @@ const GetUsersSpotifyProfile = ({
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      getDisplayName(accessToken).then((displayName) => {
-        setDisplayName(displayName);
-        getDisplayName(accessToken).then((id) => {
-          setUserId(id);
-        });
+      getDisplayName(accessToken).then((data) => {
+        
+        setDisplayName(data["display_name"]);
+        // getDisplayName(accessToken).then((id: string) => {
+        //   // if (id.indexOf(' ') >= 0) {
+        //     let newId = id.replace(" ", "%20");
+        //     // console.log(newId);
+        //     // setUserId(newId);
+        //     localStorage.setItem("userId", newId);
+        //   // } else {
+        //     // setUserId(id);
+        //   // }
+        // });
       });
+      getDisplayName(accessToken).then((data) => {
+        localStorage.setItem("userId", data["id"])
+      })
     }
   }, [localStorage.getItem("access_token")]);
 
