@@ -7,7 +7,7 @@ import "../styles/Admin.css";
 const Admin = () => {
   const [userId, setUserId] = useState<string>("");
   const getRefreshToken = async () => {
-    const refreshToken = localStorage.getItem("refresh_token");
+    const refreshToken = sessionStorage.getItem("refresh_token");
     const clientID = import.meta.env.VITE_CLIENT_ID;
 
     if (refreshToken != null) {
@@ -31,8 +31,8 @@ const Admin = () => {
         }
 
         const data = await response.json();
-        localStorage.setItem("access_token", data["access_token"]);
-        localStorage.setItem("refresh_token", data["refresh_token"]);
+        sessionStorage.setItem("access_token", data["access_token"]);
+        sessionStorage.setItem("refresh_token", data["refresh_token"]);
       } catch (error) {
         console.error("Error during refresh token retrieval:", error);
       }

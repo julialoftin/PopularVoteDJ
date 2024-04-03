@@ -8,17 +8,18 @@ interface CreatePlaylistInfo {
 }
 
 const callSpotifyCreatePlaylist = async (
-  createPlaylistInfo: CreatePlaylistInfo, id: string
+  createPlaylistInfo: CreatePlaylistInfo,
+  id: string
 ) => {
   try {
-    const accessToken = localStorage.getItem("access_token");
-    const userId = localStorage.getItem("userId");
+    const accessToken = sessionStorage.getItem("access_token");
+    const userId = sessionStorage.getItem("userId");
     const response = await fetch(
       `https://api.spotify.com/v1/users/${userId}/playlists`,
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(createPlaylistInfo),
@@ -34,20 +35,22 @@ const callSpotifyCreatePlaylist = async (
   }
 };
 
-const CreateAPlaylist: React.FC<AdminProps> = (
-  { userId },
-) => {
+const CreateAPlaylist: React.FC<AdminProps> = ({ userId }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const name: string = (document.getElementById("playlistName") as HTMLInputElement).value;
-    const description: string = (document.getElementById("playlistDescription") as HTMLInputElement).value;
+    const name: string = (
+      document.getElementById("playlistName") as HTMLInputElement
+    ).value;
+    const description: string = (
+      document.getElementById("playlistDescription") as HTMLInputElement
+    ).value;
     const playlistInfo = {
-        name: name,
-        description: description,
-    }
+      name: name,
+      description: description,
+    };
 
-    callSpotifyCreatePlaylist(playlistInfo, userId)
+    callSpotifyCreatePlaylist(playlistInfo, userId);
   };
 
   return (
