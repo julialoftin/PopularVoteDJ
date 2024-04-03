@@ -1,17 +1,7 @@
-import React from "react";
 import { useEffect, useState } from "react";
 
-// interface AdminProps {
-//   setUserId: string;
-// }
-
-const GetUsersSpotifyProfile = ({
-  setUserId,
-}: {
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const GetUsersSpotifyProfile = () => {
   const [displayName, setDisplayName] = useState<string>("");
-  // const [userId, setUserId] = useState<string>("");
   const getDisplayName = async (accessToken: string) => {
     try {
       const response = await fetch("https://api.spotify.com/v1/me", {
@@ -26,7 +16,7 @@ const GetUsersSpotifyProfile = ({
       }
 
       const data = await response.json();
-      return data["display_name"];
+      return data;
     } catch (error) {
       console.error("Error fetching profile details: ", error);
     }
@@ -35,12 +25,12 @@ const GetUsersSpotifyProfile = ({
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      getDisplayName(accessToken).then((displayName) => {
-        setDisplayName(displayName);
-        getDisplayName(accessToken).then((id) => {
-          setUserId(id);
-        });
+      getDisplayName(accessToken).then((data) => {
+        setDisplayName(data["display_name"]);
       });
+      getDisplayName(accessToken).then((data) => {
+        localStorage.setItem("userId", data["id"])
+      })
     }
   }, [localStorage.getItem("access_token")]);
 
