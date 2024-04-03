@@ -1,7 +1,17 @@
+import React from "react";
 import { useEffect, useState } from "react";
 
-const GetUsersSpotifyProfile = () => {
+// interface AdminProps {
+//   setUserId: string;
+// }
+
+const GetUsersSpotifyProfile = ({
+  setUserId,
+}: {
+  setUserId: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const [displayName, setDisplayName] = useState<string>("");
+  // const [userId, setUserId] = useState<string>("");
   const getDisplayName = async (accessToken: string) => {
     try {
       const response = await fetch("https://api.spotify.com/v1/me", {
@@ -27,6 +37,9 @@ const GetUsersSpotifyProfile = () => {
     if (accessToken) {
       getDisplayName(accessToken).then((displayName) => {
         setDisplayName(displayName);
+        getDisplayName(accessToken).then((id) => {
+          setUserId(id);
+        });
       });
     }
   }, [localStorage.getItem("access_token")]);

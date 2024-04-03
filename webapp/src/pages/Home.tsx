@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom"
+import LandingNavbar from "../components/LandingNavbar"
 
 export default function Home () {
 
 
     return (
         <>
-            <Link to='/authorize'><button>Log in With Spotify!</button></Link>
+            <LandingNavbar />
             <h1>PopularVoteDJ</h1>
         </>
     )
