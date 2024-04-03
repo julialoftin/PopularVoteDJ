@@ -30,9 +30,8 @@ const setAndHashCodes = async () => {
 }
 
 export default function SpotifyAuth() {
-
   const clientID = import.meta.env.VITE_CLIENT_ID;
-  const redirectURI = "http://localhost:5173/redirect";
+  const redirectURI = "http://localhost:8080/redirect";
 
   async function initiateSpotifyAuth() {
 
