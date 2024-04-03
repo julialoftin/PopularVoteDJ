@@ -36,19 +36,15 @@ const callSpotifyCreatePlaylist = async (
 
 const CreateAPlaylist: React.FC<AdminProps> = (
   { userId },
-//   event: React.FormEvent<HTMLFormElement>
 ) => {
-  // Call playlist end point function here
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const name: string = (document.getElementById("playlistName") as HTMLInputElement).value;
     const description: string = (document.getElementById("playlistDescription") as HTMLInputElement).value;
-    // const publicStatus: string = "true";
     const playlistInfo = {
         name: name,
         description: description,
-        // publicStatus: publicStatus,
     }
 
     callSpotifyCreatePlaylist(playlistInfo, userId)
