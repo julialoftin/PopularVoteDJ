@@ -1,5 +1,8 @@
+interface AdminProps {
+    userId: string;
+}
 
-const CreateAPlaylist = () => {
+const CreateAPlaylist: React.FC<AdminProps> = ({ userId }) => {
 
     // Call playlist end point here
 
