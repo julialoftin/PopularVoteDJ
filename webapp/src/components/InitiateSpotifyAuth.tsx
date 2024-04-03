@@ -25,16 +25,15 @@ const setAndHashCodes = async () => {
   const hashed = await sha256(codeVerifier);
   const codeChallenge = base64encode(hashed);
 
-  localStorage.setItem("codeVerifier", codeVerifier);
+  sessionStorage.setItem("codeVerifier", codeVerifier);
   return codeChallenge;
-}
+};
 
 export default function SpotifyAuth() {
   const clientID = import.meta.env.VITE_CLIENT_ID;
   const redirectURI = "http://localhost:8080/redirect";
 
   async function initiateSpotifyAuth() {
-
     const codeChallenge = await setAndHashCodes();
     const scope = "playlist-modify-public";
     const authURL = new URL("https://accounts.spotify.com/authorize/");
@@ -54,8 +53,8 @@ export default function SpotifyAuth() {
 
   useEffect(() => {
     const fetchData = async () => {
-        await setAndHashCodes();
-        await initiateSpotifyAuth();
+      await setAndHashCodes();
+      await initiateSpotifyAuth();
     };
     fetchData();
   }, []);

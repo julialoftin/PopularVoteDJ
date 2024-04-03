@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import "../styles/Admin.css"
+import "../styles/Admin.css";
 
 export default function Redirect() {
   async function getToken() {
-    const codeVerifier = localStorage.getItem("codeVerifier");
+    const codeVerifier = sessionStorage.getItem("codeVerifier");
     const clientID = import.meta.env.VITE_CLIENT_ID;
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
@@ -35,8 +35,8 @@ export default function Redirect() {
 
         const data = await response.json();
 
-        window.localStorage.setItem("access_token", data["access_token"]);
-        window.localStorage.setItem("refresh_token", data["refresh_token"]);
+        window.sessionStorage.setItem("access_token", data["access_token"]);
+        window.sessionStorage.setItem("refresh_token", data["refresh_token"]);
         await new Promise<void>((resolve) => resolve());
       } catch (error) {
         console.error("Error during token retrieval:", error);
@@ -51,7 +51,7 @@ export default function Redirect() {
       await getToken();
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
-      if (localStorage.getItem("codeVerifier") && code != null) {
+      if (sessionStorage.getItem("codeVerifier") && code != null) {
         window.location.href = "http://localhost:8080/admin/";
       }
     };

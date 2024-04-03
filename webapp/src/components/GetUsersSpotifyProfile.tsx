@@ -23,16 +23,16 @@ const GetUsersSpotifyProfile = () => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = sessionStorage.getItem("access_token");
     if (accessToken) {
       getDisplayName(accessToken).then((data) => {
         setDisplayName(data["display_name"]);
       });
       getDisplayName(accessToken).then((data) => {
-        localStorage.setItem("userId", data["id"])
-      })
+        sessionStorage.setItem("userId", data["id"]);
+      });
     }
-  }, [localStorage.getItem("access_token")]);
+  }, [sessionStorage.getItem("access_token")]);
 
   return (
     <div className="admin-profile-details-container">
