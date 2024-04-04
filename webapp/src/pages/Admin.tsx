@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AdminNavbar from "../components/AdminNavbar";
 import CreateAPlaylist from "../components/CreateAPlaylist";
 import GetUsersSpotifyProfile from "../components/GetUsersSpotifyProfile";
 import "../styles/Admin.css";
 
 const Admin = () => {
-  const [userId, setUserId] = useState<string>("");
   const getRefreshToken = async () => {
     const refreshToken = sessionStorage.getItem("refresh_token");
     const clientID = import.meta.env.VITE_CLIENT_ID;
@@ -53,8 +52,8 @@ const Admin = () => {
   return (
     <>
       <AdminNavbar />
-      <GetUsersSpotifyProfile setUserId={setUserId} />
-      <CreateAPlaylist userId={userId} />
+      <GetUsersSpotifyProfile />
+      <CreateAPlaylist />
     </>
   );
 };
