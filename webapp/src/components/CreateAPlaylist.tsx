@@ -73,4 +73,5 @@ const CreateAPlaylist = () => {
   );
 };
 
-export default CreateAPlaylist;
+// export default CreateAPlaylist;
+export default callSpotifyCreatePlaylist

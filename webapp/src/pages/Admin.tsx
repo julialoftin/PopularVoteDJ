@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import AdminNavbar from "../components/AdminNavbar";
-import CreateAPlaylist from "../components/CreateAPlaylist";
 import GetUsersSpotifyProfile from "../components/GetUsersSpotifyProfile";
 import "../styles/Admin.css";
+import HostEventForm from "../components/HostEventForm";
 
 const Admin = () => {
   const getRefreshToken = async () => {
@@ -53,7 +53,7 @@ const Admin = () => {
     <>
       <AdminNavbar />
       <GetUsersSpotifyProfile />
-      <CreateAPlaylist />
+      <HostEventForm />
     </>
   );
 };
