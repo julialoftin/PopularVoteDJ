@@ -35,7 +35,7 @@ export default function SpotifyAuth() {
 
   async function initiateSpotifyAuth() {
     const codeChallenge = await setAndHashCodes();
-    const scope = "playlist-modify-public";
+    const scope = "playlist-modify-public playlist-read-private";
     const authURL = new URL("https://accounts.spotify.com/authorize/");
 
     const params = {

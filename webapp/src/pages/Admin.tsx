@@ -3,6 +3,7 @@ import AdminNavbar from "../components/AdminNavbar";
 import GetUsersSpotifyProfile from "../components/GetUsersSpotifyProfile";
 import "../styles/Admin.css";
 import HostEventForm from "../components/HostEventForm";
+import ChoosePlaylistForChart from "../components/ChoosePlaylistForChart";
 
 const Admin = () => {
   const getRefreshToken = async () => {
@@ -54,6 +55,7 @@ const Admin = () => {
       <AdminNavbar />
       <GetUsersSpotifyProfile />
       <HostEventForm />
+      <ChoosePlaylistForChart />
     </>
   );
 };
