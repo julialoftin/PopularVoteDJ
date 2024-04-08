@@ -3,6 +3,7 @@ import GetCurrentUsersPlaylists from "../SpotifyAPICalls.ts/GetCurrentUsersPlayl
 import GetPlaylistItems from "../SpotifyAPICalls.ts/GetPlaylistItems";
 import GetTrack from "../SpotifyAPICalls.ts/GetTrack";
 import PlaylistTable from "./PlaylistTable";
+import GetSeveralTracks from "../SpotifyAPICalls.ts/GetSeveralTracks";
 
 interface PlaylistData {
   id: string;
@@ -28,11 +29,13 @@ export interface TrackObject {
   id: string;
   name: string;
   popularity: number;
-  artists: [{
-    id: string;
-    name: string;
-    genres: [string];
-  }]
+  artists: [
+    {
+      id: string;
+      name: string;
+      genres: [string];
+    }
+  ];
   // other properties...
 }
 
@@ -60,16 +63,23 @@ const ChoosePlaylistForChart = () => {
       if (playlistItems) {
         const trackIds = playlistItems.items.map((item) => item.track.id);
         console.log(trackIds);
-        const trackObjectsPromises = trackIds.map((trackId) =>
-          GetTrack(trackId)
-        );
-        Promise.all(trackObjectsPromises)
+        // const trackObjectsPromises = trackIds.map((trackId) =>
+        //   GetTrack(trackId)
+        // );
+        // Promise.all(trackObjectsPromises)
+        //   .then((trackObjectsArray) => {
+        //     setTracksOfSelectedPlaylist(trackObjectsArray as TrackObject[]);
+        //     console.log(trackObjectsArray);
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error fetching track details:", error);
+        //   });
+        GetSeveralTracks(trackIds)
           .then((trackObjectsArray) => {
-            setTracksOfSelectedPlaylist(trackObjectsArray as TrackObject[]);
-            console.log(trackObjectsArray);
+            console.log("All track objects fetched:", trackObjectsArray);
           })
           .catch((error) => {
-            console.error("Error fetching track details:", error);
+            console.error("Error fetching track objects:", error);
           });
       } else {
         console.error("Track IDs not found");
