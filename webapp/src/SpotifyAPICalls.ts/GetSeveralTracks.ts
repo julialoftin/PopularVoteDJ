@@ -24,26 +24,6 @@ const spotifyCall = async (trackIds: string) => {
   }
 };
 
-// const GetSeveralTracks = async (trackIdArr: string[]) => {
-//   const chunkedTrackArr = [];
-//   if (trackIdArr) {
-//     const chunkSize = 99;
-//     for (let i = 0; i < trackIdArr.length; i += chunkSize) {
-//       const chunk = trackIdArr.slice(i, i + chunkSize);
-//       chunkedTrackArr.push(chunk);
-//     }
-//     const promises = chunkedTrackArr.map((chunkArr) =>
-//       spotifyCall(chunkArr.toString())
-//     );
-//     const responses = await Promise.all(promises);
-//     const tracks: TrackObject[] = responses
-//       .map((response) => response.tracks)
-//       .flat(); // Flatten the array of tracks
-//     return tracks;
-//   }
-//   return [];
-// };
-
 const GetSeveralTracks = async (trackIdArr: string[]) => {
   try {
     const chunkedTrackArr = [];
