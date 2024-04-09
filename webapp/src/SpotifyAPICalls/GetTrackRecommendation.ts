@@ -1,4 +1,5 @@
 const GetTrackRecommendations = async (track_id: string) => {
+  // adjust to be able to handle changes to the request parameters
   try {
     const accessToken = sessionStorage.getItem("access_token");
     const response = await fetch(

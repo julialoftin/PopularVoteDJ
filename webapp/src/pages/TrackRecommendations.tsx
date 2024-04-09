@@ -10,44 +10,47 @@ const TrackRecommendations = () => {
   const [recommendations, setRecommendations] = useState<TrackObject[]>([]);
   const [baseTrack, setBaseTrack] = useState<TrackObject>();
 
-    useEffect(() => {
-        if (id != undefined) {
-            GetTrackRecommendations(id).then((recommendationResult) => {
-                console.log(recommendationResult);
-                setRecommendations(recommendationResult.tracks);
-            })
-            GetTrack(id).then((track) => {
-                setBaseTrack(track);
-            })
-        }
-
-    }, [id])
+  useEffect(() => {
+    if (id != undefined) {
+      GetTrackRecommendations(id).then((recommendationResult) => {
+        console.log(recommendationResult);
+        setRecommendations(recommendationResult.tracks);
+      });
+      GetTrack(id).then((track) => {
+        setBaseTrack(track);
+      });
+    }
+  }, [id]);
 
   return (
     <div>
-        <AdminNavbar />
-        {baseTrack && (
+      <AdminNavbar />
+      {baseTrack && (
         <h3 key={baseTrack.id}>Recommended Songs Based On: {baseTrack.name}</h3>
-        )}
-        <table>
-            <thead>
-                <tr>
-                    <td>Track</td>
-                    <td>Artist</td>
-                    <td>Popularity</td>
-                </tr>
-            </thead>
-            <tbody>
-                {recommendations &&
-                  recommendations.map((track) => (
-                <tr key={track.id}>
-                    <td>{track.name}</td>
-                    <td>{track.artists[0].name}</td>
-                    <td>{track.popularity}</td>
-                </tr>
-                ))}
-            </tbody>
-        </table>
+      )}
+      <p>Adjust any of the following to include it in the recommendation algorithm!</p>
+      <form>
+        {/* Form to adjust TrackRecommendations call  */}
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <td>Track</td>
+            <td>Artist</td>
+            <td>Popularity</td>
+          </tr>
+        </thead>
+        <tbody>
+          {recommendations &&
+            recommendations.map((track) => (
+              <tr key={track.id}>
+                <td>{track.name}</td>
+                <td>{track.artists[0].name}</td>
+                <td>{track.popularity}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 };
