@@ -1,10 +1,8 @@
-import { TrackObject } from "../components/ChoosePlaylistForChart";
-
-const GetTrack = async (track_id: string) => {
+const GetTrackRecommendations = async (track_id: string) => {
   try {
     const accessToken = sessionStorage.getItem("access_token");
     const response = await fetch(
-      `https://api.spotify.com/v1/tracks/${track_id}`,
+      `https://api.spotify.com/v1/recommendations?seed_tracks=${track_id}`,
       {
         method: "GET",
         headers: {
@@ -18,11 +16,11 @@ const GetTrack = async (track_id: string) => {
     }
 
     const data = await response.json();
-    const result: TrackObject = data;
-    return result;
+    console.log(data);
+    return data;
   } catch (error) {
     console.error("Error fetching track: ", error);
   }
 };
 
-export default GetTrack;
+export default GetTrackRecommendations;

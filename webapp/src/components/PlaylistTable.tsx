@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import GetSeveralTracksAudioFeatures from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
 import { TrackObject } from "./ChoosePlaylistForChart";
 import { AudioFeatureObject } from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
+import { Link } from "react-router-dom";
 
 interface TrackProp {
   tracksOfSelectedPlaylist: TrackObject[];
 }
 
 const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
-  const [audioFeaturesArr, setAudioFeaturesArr] = useState<AudioFeatureObject[]>([]);
+  const [audioFeaturesArr, setAudioFeaturesArr] = useState<
+    AudioFeatureObject[]
+  >([]);
   console.log("tracksOfSelectedPlaylist: ", tracksOfSelectedPlaylist);
 
   useEffect(() => {
-
     if (tracksOfSelectedPlaylist && tracksOfSelectedPlaylist.length > 0) {
       const trackIds = tracksOfSelectedPlaylist.map((track) => track.id);
       GetSeveralTracksAudioFeatures(trackIds)
@@ -24,11 +26,11 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
           console.error("Error fetching audio features:", error);
         });
     }
-
   }, [tracksOfSelectedPlaylist]);
 
   return (
     <div>
+      <h3>Click on a track to get recommendations!</h3>
       <table>
         <thead>
           <tr>
@@ -36,6 +38,8 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             <th>Artist</th>
             <th>Popularity</th>
             <th>Acousticness</th>
+            <th>Energy</th>
+            <th>Valence</th>
           </tr>
         </thead>
         <tbody>
@@ -45,14 +49,19 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             );
             return (
               <tr key={track.id}>
-                <td>{track.name}</td>
+                <td><a href={`/track-recommendations/${track.id}`}>{track.name}</a></td>
                 <td>{track.artists[0].name}</td>
                 <td>{track.popularity}</td>
                 <td>
-                  {matchingAudioFeature
-                    ? matchingAudioFeature.acousticness
-                    : ""}
+                  {matchingAudioFeature ? matchingAudioFeature.acousticness : ""}
                 </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.energy : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.valence : ""}
+                </td>
+                
               </tr>
             );
           })}

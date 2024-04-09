@@ -9,6 +9,7 @@ export default function AdminNavbar() {
 
   return (
     <>
+      <a href="/admin">Home</a>
       <button onClick={handleLogout}>Logout</button>
     </>
   );

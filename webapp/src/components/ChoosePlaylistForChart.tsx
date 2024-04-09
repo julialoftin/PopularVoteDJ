@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import GetCurrentUsersPlaylists from "../SpotifyAPICalls/GetCurrentUsersPlaylists";
 import GetPlaylistItems from "../SpotifyAPICalls/GetPlaylistItems";
-import GetTrack from "../SpotifyAPICalls/GetTrack";
 import PlaylistTable from "./PlaylistTable";
 import GetSeveralTracks from "../SpotifyAPICalls/GetSeveralTracks";
-import { AudioFeatures } from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
 
 interface PlaylistData {
   id: string;
