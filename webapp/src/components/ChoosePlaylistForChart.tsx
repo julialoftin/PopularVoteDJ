@@ -26,17 +26,17 @@ interface PlaylistItems {
 }
 
 export interface TrackObject {
-  id: string;
-  name: string;
-  popularity: number;
-  artists: [
-    {
-      id: string;
-      name: string;
-      genres: [string];
-    }
-  ];
-  // other properties...
+    id: string;
+    name: string;
+    popularity: number;
+    explicit: boolean;
+    // other properties...
+    artists: [
+      {
+        id: string;
+        name: string;
+      }
+    ];
 }
 
 const ChoosePlaylistForChart = () => {
@@ -76,6 +76,7 @@ const ChoosePlaylistForChart = () => {
         //   });
         GetSeveralTracks(trackIds)
           .then((trackObjectsArray) => {
+            setTracksOfSelectedPlaylist(trackObjectsArray);
             console.log("All track objects fetched:", trackObjectsArray);
           })
           .catch((error) => {

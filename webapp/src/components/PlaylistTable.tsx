@@ -5,6 +5,7 @@ interface TrackProp {
 }
 
 const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
+  console.log("tracksOfSelectedPlaylist: ", tracksOfSelectedPlaylist)
   return (
     <div>
       <table>
@@ -14,6 +15,7 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
           <th>Popularity</th>
         </tr>
         {tracksOfSelectedPlaylist &&
+          tracksOfSelectedPlaylist.length > 0 &&
           tracksOfSelectedPlaylist.map((track) => (
             // <div key={track.id}>
             //     <p>{track.name}</p>

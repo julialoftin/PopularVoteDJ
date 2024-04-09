@@ -1,3 +1,5 @@
+import { TrackObject } from "../components/ChoosePlaylistForChart";
+
 const spotifyCall = async (trackIds: string) => {
   try {
     const accessToken = sessionStorage.getItem("access_token");
@@ -22,7 +24,25 @@ const spotifyCall = async (trackIds: string) => {
   }
 };
 
-const GetSeveralTracks = (trackIdArr: string[]) => {
+// const GetSeveralTracks = (trackIdArr: string[]) => {
+//   const chunkedTrackArr = [];
+//   if (trackIdArr) {
+//     const chunkSize = 99;
+//     for (let i = 0; i < trackIdArr.length; i += chunkSize) {
+//       const chunk = trackIdArr.slice(i, i + chunkSize);
+//       chunkedTrackArr.push(chunk);
+//     }
+//     console.log(chunkedTrackArr);
+//     const promises = chunkedTrackArr.map((chunkArr) =>
+//       spotifyCall(chunkArr.toString())
+//     );
+//     console.log(promises);
+//     return Promise.all(promises);
+//   }
+//   return Promise.resolve([]);
+// };
+
+const GetSeveralTracks = async (trackIdArr: string[]) => {
   const chunkedTrackArr = [];
   if (trackIdArr) {
     const chunkSize = 99;
@@ -30,14 +50,16 @@ const GetSeveralTracks = (trackIdArr: string[]) => {
       const chunk = trackIdArr.slice(i, i + chunkSize);
       chunkedTrackArr.push(chunk);
     }
-    console.log(chunkedTrackArr);
     const promises = chunkedTrackArr.map((chunkArr) =>
       spotifyCall(chunkArr.toString())
     );
-    console.log(promises);
-    return Promise.all(promises);
+    const responses = await Promise.all(promises);
+    const tracks: TrackObject[] = responses
+      .map((response) => response.tracks)
+      .flat(); // Flatten the array of tracks
+    return tracks;
   }
-  return Promise.resolve([]);
+  return [];
 };
 
 export default GetSeveralTracks;
