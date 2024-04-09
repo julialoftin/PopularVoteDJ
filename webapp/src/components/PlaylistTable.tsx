@@ -38,8 +38,16 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             <th>Artist</th>
             <th>Popularity</th>
             <th>Acousticness</th>
+            <th>Danceability</th>
             <th>Energy</th>
+            <th>Instrumentalness</th>
+            <th>Key</th>
+            <th>Liveness</th>
+            <th>Loudness</th>
+            <th>Modality</th>
+            <th>Speechiness</th>
             <th>Valence</th>
+            <th>Duration(ms)</th>
           </tr>
         </thead>
         <tbody>
@@ -56,10 +64,34 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
                   {matchingAudioFeature ? matchingAudioFeature.acousticness : ""}
                 </td>
                 <td>
+                  {matchingAudioFeature ? matchingAudioFeature.danceability : ""}
+                </td>
+                <td>
                   {matchingAudioFeature ? matchingAudioFeature.energy : ""}
                 </td>
                 <td>
+                  {matchingAudioFeature ? matchingAudioFeature.instrumentalness : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.key : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.liveness : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.loudness : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.mode : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.speechiness : ""}
+                </td>
+                <td>
                   {matchingAudioFeature ? matchingAudioFeature.valence : ""}
+                </td>
+                <td>
+                  {matchingAudioFeature ? matchingAudioFeature.duration_ms : ""}
                 </td>
                 
               </tr>
