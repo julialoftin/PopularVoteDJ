@@ -4,6 +4,7 @@ import GetPlaylistItems from "../SpotifyAPICalls/GetPlaylistItems";
 import GetTrack from "../SpotifyAPICalls/GetTrack";
 import PlaylistTable from "./PlaylistTable";
 import GetSeveralTracks from "../SpotifyAPICalls/GetSeveralTracks";
+import { AudioFeatures } from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
 
 interface PlaylistData {
   id: string;
@@ -63,17 +64,6 @@ const ChoosePlaylistForChart = () => {
       if (playlistItems) {
         const trackIds = playlistItems.items.map((item) => item.track.id);
         console.log(trackIds);
-        // const trackObjectsPromises = trackIds.map((trackId) =>
-        //   GetTrack(trackId)
-        // );
-        // Promise.all(trackObjectsPromises)
-        //   .then((trackObjectsArray) => {
-        //     setTracksOfSelectedPlaylist(trackObjectsArray as TrackObject[]);
-        //     console.log(trackObjectsArray);
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error fetching track details:", error);
-        //   });
         GetSeveralTracks(trackIds)
           .then((trackObjectsArray) => {
             setTracksOfSelectedPlaylist(trackObjectsArray);
