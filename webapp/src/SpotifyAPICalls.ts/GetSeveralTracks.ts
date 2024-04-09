@@ -24,7 +24,7 @@ const spotifyCall = async (trackIds: string) => {
   }
 };
 
-// const GetSeveralTracks = (trackIdArr: string[]) => {
+// const GetSeveralTracks = async (trackIdArr: string[]) => {
 //   const chunkedTrackArr = [];
 //   if (trackIdArr) {
 //     const chunkSize = 99;
@@ -32,34 +32,41 @@ const spotifyCall = async (trackIds: string) => {
 //       const chunk = trackIdArr.slice(i, i + chunkSize);
 //       chunkedTrackArr.push(chunk);
 //     }
-//     console.log(chunkedTrackArr);
 //     const promises = chunkedTrackArr.map((chunkArr) =>
 //       spotifyCall(chunkArr.toString())
 //     );
-//     console.log(promises);
-//     return Promise.all(promises);
+//     const responses = await Promise.all(promises);
+//     const tracks: TrackObject[] = responses
+//       .map((response) => response.tracks)
+//       .flat(); // Flatten the array of tracks
+//     return tracks;
 //   }
-//   return Promise.resolve([]);
+//   return [];
 // };
 
 const GetSeveralTracks = async (trackIdArr: string[]) => {
-  const chunkedTrackArr = [];
-  if (trackIdArr) {
-    const chunkSize = 99;
-    for (let i = 0; i < trackIdArr.length; i += chunkSize) {
-      const chunk = trackIdArr.slice(i, i + chunkSize);
-      chunkedTrackArr.push(chunk);
+  try {
+    const chunkedTrackArr = [];
+    if (trackIdArr) {
+      const chunkSize = 50;
+      for (let i = 0; i < trackIdArr.length; i += chunkSize) {
+        const chunk = trackIdArr.slice(i, i + chunkSize);
+        chunkedTrackArr.push(chunk);
+      }
+      const promises = chunkedTrackArr.map((chunkArr) =>
+        spotifyCall(chunkArr.toString())
+      );
+      const responses = await Promise.all(promises);
+      const tracks: TrackObject[] = responses
+        .flatMap((response) => response.tracks)
+        .filter((track) => track !== null && track !== undefined); // Filter out null or undefined tracks
+      return tracks;
     }
-    const promises = chunkedTrackArr.map((chunkArr) =>
-      spotifyCall(chunkArr.toString())
-    );
-    const responses = await Promise.all(promises);
-    const tracks: TrackObject[] = responses
-      .map((response) => response.tracks)
-      .flat(); // Flatten the array of tracks
-    return tracks;
+    return [];
+  } catch (error) {
+    console.error("Error in GetSeveralTracks: ", error);
+    throw error; // Rethrow the error to propagate it
   }
-  return [];
 };
 
 export default GetSeveralTracks;
