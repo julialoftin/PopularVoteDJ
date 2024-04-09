@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import GetCurrentUsersPlaylists from "../SpotifyAPICalls.ts/GetCurrentUsersPlaylists";
-import GetPlaylistItems from "../SpotifyAPICalls.ts/GetPlaylistItems";
-import GetTrack from "../SpotifyAPICalls.ts/GetTrack";
+import GetCurrentUsersPlaylists from "../SpotifyAPICalls/GetCurrentUsersPlaylists";
+import GetPlaylistItems from "../SpotifyAPICalls/GetPlaylistItems";
+import GetTrack from "../SpotifyAPICalls/GetTrack";
 import PlaylistTable from "./PlaylistTable";
-import GetSeveralTracks from "../SpotifyAPICalls.ts/GetSeveralTracks";
+import GetSeveralTracks from "../SpotifyAPICalls/GetSeveralTracks";
 
 interface PlaylistData {
   id: string;
