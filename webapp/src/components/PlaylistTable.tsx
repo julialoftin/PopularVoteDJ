@@ -48,6 +48,7 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             <th>Speechiness</th>
             <th>Valence</th>
             <th>Duration(ms)</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -57,33 +58,35 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             );
             return (
               <tr key={track.id}>
-                <td><a href={`/track-recommendations/${track.id}`}>{track.name}</a></td>
+                <td>{track.name}</td>
                 <td>{track.artists[0].name}</td>
                 <td>{track.popularity}</td>
                 <td>
-                  {matchingAudioFeature ? matchingAudioFeature.acousticness : ""}
+                  {matchingAudioFeature
+                    ? matchingAudioFeature.acousticness
+                    : ""}
                 </td>
                 <td>
-                  {matchingAudioFeature ? matchingAudioFeature.danceability : ""}
+                  {matchingAudioFeature
+                    ? matchingAudioFeature.danceability
+                    : ""}
                 </td>
                 <td>
                   {matchingAudioFeature ? matchingAudioFeature.energy : ""}
                 </td>
                 <td>
-                  {matchingAudioFeature ? matchingAudioFeature.instrumentalness : ""}
+                  {matchingAudioFeature
+                    ? matchingAudioFeature.instrumentalness
+                    : ""}
                 </td>
-                <td>
-                  {matchingAudioFeature ? matchingAudioFeature.key : ""}
-                </td>
+                <td>{matchingAudioFeature ? matchingAudioFeature.key : ""}</td>
                 <td>
                   {matchingAudioFeature ? matchingAudioFeature.liveness : ""}
                 </td>
                 <td>
                   {matchingAudioFeature ? matchingAudioFeature.loudness : ""}
                 </td>
-                <td>
-                  {matchingAudioFeature ? matchingAudioFeature.mode : ""}
-                </td>
+                <td>{matchingAudioFeature ? matchingAudioFeature.mode : ""}</td>
                 <td>
                   {matchingAudioFeature ? matchingAudioFeature.speechiness : ""}
                 </td>
@@ -93,7 +96,9 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
                 <td>
                   {matchingAudioFeature ? matchingAudioFeature.duration_ms : ""}
                 </td>
-                
+                <td>
+                  <a href={`/track-recommendations/${track.id}`}>Recommendations</a>
+                </td>
               </tr>
             );
           })}
