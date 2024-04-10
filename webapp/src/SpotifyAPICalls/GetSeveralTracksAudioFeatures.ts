@@ -48,7 +48,7 @@ const GetSeveralTracksAudioFeatures = async (trackIdArr: string[]) => {
         chunkedTrackArr.push(chunk);
       }
       const promises = chunkedTrackArr.map((chunkArr) =>
-        spotifyCall(chunkArr.toString())
+        spotifyCall(chunkArr.join("%"))
       );
       const responses = await Promise.all(promises);
       const audioFeatures: AudioFeatureObject[] = responses

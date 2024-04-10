@@ -5,6 +5,7 @@ import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import Redirect from "./pages/Redirect";
 import TrackRecommendations from "./pages/TrackRecommendations";
+import Track from "./pages/Track";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/redirect" element={<Redirect />} />
           <Route path="/admin" element={<Admin />} /> 
           <Route path="/track-recommendations/:id" element={<TrackRecommendations />} />
+          <Route path="/track/:id" element={<Track />} />
         </Routes>
       </Router>
     </>

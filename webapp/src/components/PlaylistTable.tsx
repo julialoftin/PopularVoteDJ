@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import GetSeveralTracksAudioFeatures from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
 import { TrackObject } from "./ChoosePlaylistForChart";
 import { AudioFeatureObject } from "../SpotifyAPICalls/GetSeveralTracksAudioFeatures";
-import { Link } from "react-router-dom";
 
 interface TrackProp {
   tracksOfSelectedPlaylist: TrackObject[];
@@ -58,7 +57,9 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
             );
             return (
               <tr key={track.id}>
-                <td>{track.name}</td>
+                <td>
+                  <a href={`/track/${track.id}`}>{track.name}</a>
+                </td>
                 <td>{track.artists[0].name}</td>
                 <td>{track.popularity}</td>
                 <td>
@@ -97,7 +98,9 @@ const PlaylistTable: React.FC<TrackProp> = ({ tracksOfSelectedPlaylist }) => {
                   {matchingAudioFeature ? matchingAudioFeature.duration_ms : ""}
                 </td>
                 <td>
-                  <a href={`/track-recommendations/${track.id}`}>Recommendations</a>
+                  <a href={`/track-recommendations/${track.id}`}>
+                    Recommendations
+                  </a>
                 </td>
               </tr>
             );
